@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:intf="http://service.inwebo.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="http://service.inwebo.com" targetNamespace="http://service.inwebo.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://service.inwebo.com">
+      <xsd:element name="authenticate">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string" />
+            <xsd:element name="serviceId" type="xsd:string" />
+            <xsd:element name="token" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="authenticateResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="authenticateReturn" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="authenticateWithIp">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string" />
+            <xsd:element name="serviceId" type="xsd:string" />
+            <xsd:element name="token" type="xsd:string" />
+            <xsd:element name="ip" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="authenticateWithIpResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="authenticateWithIpReturn" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="authenticateWithIpResponse">
+    <wsdl:part name="parameters" element="impl:authenticateWithIpResponse" />
+  </wsdl:message>
+  <wsdl:message name="authenticateResponse">
+    <wsdl:part name="parameters" element="impl:authenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="authenticateWithIpRequest">
+    <wsdl:part name="parameters" element="impl:authenticateWithIp" />
+  </wsdl:message>
+  <wsdl:message name="authenticateRequest">
+    <wsdl:part name="parameters" element="impl:authenticate" />
+  </wsdl:message>
+  <wsdl:portType name="Authentication">
+    <wsdl:operation name="authenticate">
+      <wsdl:input name="authenticateRequest" message="impl:authenticateRequest" />
+      <wsdl:output name="authenticateResponse" message="impl:authenticateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="authenticateWithIp">
+      <wsdl:input name="authenticateWithIpRequest" message="impl:authenticateWithIpRequest" />
+      <wsdl:output name="authenticateWithIpResponse" message="impl:authenticateWithIpResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AuthenticationSoapBinding" type="impl:Authentication">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="authenticate">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="authenticateRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="authenticateResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="authenticateWithIp">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="authenticateWithIpRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="authenticateWithIpResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AuthenticationService">
+    <wsdl:port name="Authentication" binding="impl:AuthenticationSoapBinding">
+      <wsdlsoap:address location="https://api.myinwebo.com/v2/services/Authentication" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
